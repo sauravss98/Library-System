@@ -21,11 +21,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-uwd@kgh9($_l67(y5jf9vm=kwapf8odej#s0u9+t-^-th1dpgx'
-import environ
-# Initialise environment variables
-env = environ.Env()
-environ.Env.read_env()
-SECRET_KEY =env(SECRET_KEY)
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+SECRET_KEY = os.getenv("SECRET_KEY")
+# import environ
+# # Initialise environment variables
+# env = environ.Env()
+# environ.Env.read_env()
+
+# SECRET_KEY =env(SECRET_KEY)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -86,6 +92,16 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.getenv('ENGINE'),
+#         'NAME': os.getenv('NAME'),
+#         'USER': os.getenv('USER'),
+#         'PASSWORD': os.getenv('PASSWORD'),
+#         'HOST':os.getenv('HOST'),
+#         'PORT':os.getenv('PORT'),
+#     }
+# }
 
 
 # Password validation
