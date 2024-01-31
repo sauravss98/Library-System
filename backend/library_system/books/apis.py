@@ -14,16 +14,23 @@ class CreateBookDetailsView(CreateAPIView):
     serializer_class = BookSerializer
 
 class BooksListView(ListAPIView):
-    queryset = Book.objects.all()
     serializer_class = BookSerializer
+
+    def get_queryset(self):
+        queryset = Book.objects.all()
+        return queryset
     
 class BookListView(RetrieveAPIView):
     serializer_class = BookSerializer
-    queryset = Book.objects.all()
+    def get_queryset(self):
+        queryset = Book.objects.all()
+        return queryset
 
 class UpdateBookDetailsView(UpdateAPIView):
     serializer_class = BookSerializer
-    queryset = Book.objects.all()
+    def get_queryset(self):
+        queryset = Book.objects.all()
+        return queryset
 
 class DeleteBookView(DestroyAPIView):
     queryset = Book.objects.all()
