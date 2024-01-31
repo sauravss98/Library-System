@@ -4,7 +4,7 @@ from django.db import models
 class Book(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255)
-    authorName = models.CharField(max_length=255)
+    author_name = models.CharField(max_length=255)
     quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
