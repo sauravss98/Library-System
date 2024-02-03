@@ -1,11 +1,12 @@
 from django.shortcuts import render,get_object_or_404
+from django.contrib.auth import logout
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication,TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, authentication_classes,permission_classes
 from rest_framework.response import Response
-
+from rest_framework.views import APIView
 
 from .serializers import UserAuthSerializer
 from .models import User
@@ -47,3 +48,8 @@ def signup(request):
 @permission_classes([IsAuthenticated])
 def test_token(request):
     return Response("passed for {}".format(request.user.email))
+
+class UserLogout(APIView):
+    def post(self,request):
+        logout(request)
+        return Response(status=status.HTTP_200_OK)
