@@ -23,7 +23,7 @@ def login(request):
         return Response({"detail":"Not found"}, status= status.HTTP_404_NOT_FOUND)
     token, created = Token.objects.get_or_create(user=user)
     serializer = UserAuthSerializer(instance=user)
-    return Response({"token":token.key,"user":serializer.data})
+    return Response({"token":token.key,"user_email":serializer.data['email'],"status":status.HTTP_201_CREATED})
 
 @api_view(['POST'])
 def signup(request):
