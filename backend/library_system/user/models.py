@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth import base_user
 
 # Create your models here.
 class User(AbstractUser):
@@ -11,7 +10,8 @@ class User(AbstractUser):
 
     email = models.EmailField(unique = True)
     status = models.CharField(max_length = 100, choices = STATUS,default="student")
+    updated_on = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.username
+        return self.email
     

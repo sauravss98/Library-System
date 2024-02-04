@@ -49,9 +49,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "rest_framework",
+    "rest_framework.authtoken",
     "books",
     "user",
-    "rest_framework.authtoken"
+    "cart"
 ]
 
 AUTH_USER_MODEL = 'user.USER'
