@@ -5,8 +5,12 @@ from user.models import User
 
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    books = models.ManyToManyField(Book)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Cart for {self.user.first_name} {self.user.last_name}" 
+        return f"Cart for {self.user.username}"
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    books = models.ManyToManyField(Book)
+    # quantity = models.PositiveIntegerField(default=1)
