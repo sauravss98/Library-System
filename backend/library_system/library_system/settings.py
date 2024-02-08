@@ -55,6 +55,13 @@ INSTALLED_APPS = [
     "cart"
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'sauravsuresh171@gmail.com'
+EMAIL_HOST_PASSWORD = 'mzau fcob gazp mtzx'
+
 AUTH_USER_MODEL = 'user.USER'
 
 MIDDLEWARE = [

@@ -8,8 +8,11 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+
 from .serializers import UserAuthSerializer
 from .models import User
+
+from django.core.mail import send_mail
 
 @api_view(['POST'])
 def login(request):
@@ -42,4 +45,19 @@ def test_token(request):
 class UserLogout(APIView):
     def post(self, request):
         logout(request)
+        return Response(status=status.HTTP_200_OK)
+    
+class SendMail(APIView):
+    def post(self, request):
+        send_mail(
+            'Subject here',
+            'Here is the message.',
+            'sauravsuresh171@gmail.com',
+            ['sauravss98@gmail.com'],
+            fail_silently=False,  # Set it to True to suppress exceptions
+            auth_user=None,
+            auth_password=None,
+            connection=None,
+            html_message=None,
+        )
         return Response(status=status.HTTP_200_OK)
