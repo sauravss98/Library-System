@@ -12,7 +12,7 @@ from rest_framework.views import APIView
 from .serializers import UserAuthSerializer
 from .models import User
 
-from django.core.mail import send_mail
+from .utils import generate_otp,send_otp_mail
 
 @api_view(['POST'])
 def login(request):
@@ -26,15 +26,39 @@ def login(request):
 @api_view(['POST'])
 def signup(request):
     serializer = UserAuthSerializer(data=request.data)
+    otp = generate_otp()
     if serializer.is_valid():
         serializer.save()
         user = User.objects.get(email=request.data['email'])
         user.set_password(request.data["password"])
         user.username = request.data['email']+request.data['first_name']
+        user.otp = otp
+        user.email_verified = False
         user.save()
+        send_otp_mail(otp,user.email)
         token= Token.objects.create(user=user)
         return Response({"token": token.key, "user": serializer.data}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def verify_otp(request):
+    if request.method == 'POST':
+        otp_entered = request.data['otp']
+        user = request.user
+        print(user)
+        print(f"otp form user {otp_entered}")
+        print(f"otp stored in db {user.otp}")
+        if int(user.otp) == int(otp_entered):
+            # OTP matched, mark email as verified
+            user.email_verified = True
+            user.save()
+            return Response('home')
+        else:
+            # OTP did not match, show error
+            return Response({'error': 'Invalid OTP'})
+    
 
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
@@ -45,19 +69,4 @@ def test_token(request):
 class UserLogout(APIView):
     def post(self, request):
         logout(request)
-        return Response(status=status.HTTP_200_OK)
-    
-class SendMail(APIView):
-    def post(self, request):
-        send_mail(
-            'Subject here',
-            'Here is the message.',
-            'sauravsuresh171@gmail.com',
-            ['sauravss98@gmail.com'],
-            fail_silently=False,  # Set it to True to suppress exceptions
-            auth_user=None,
-            auth_password=None,
-            connection=None,
-            html_message=None,
-        )
         return Response(status=status.HTTP_200_OK)
