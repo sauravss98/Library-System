@@ -2,6 +2,9 @@ from django.db import models
 
 # Create your models here.
 class Book(models.Model):
+    """
+    Model Class for Book
+    """
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255)
     author_name = models.CharField(max_length=255)
@@ -12,6 +15,9 @@ class Book(models.Model):
 
     @property
     def is_available(self):
+        """
+        Function to return if book is available or not
+        """
         if self.quantity ==0:
             return False
         else:

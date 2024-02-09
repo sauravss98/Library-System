@@ -16,6 +16,9 @@ from .utils import generate_otp,send_otp_mail
 
 @api_view(['POST'])
 def login(request):
+    """"
+    Api for logging in the user
+    """
     user = get_object_or_404(User, email=request.data['email'])
     if not user.check_password(request.data["password"]):
         return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -25,6 +28,9 @@ def login(request):
 
 @api_view(['POST'])
 def signup(request):
+    """"
+    Api for signing up the new user
+    """
     serializer = UserAuthSerializer(data=request.data)
     otp = generate_otp()
     if serializer.is_valid():
@@ -44,6 +50,9 @@ def signup(request):
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def verify_otp(request):
+    """"
+    Api for verifying otp of a new user
+    """
     if request.method == 'POST':
         otp_entered = request.data['otp']
         user = request.user
@@ -67,6 +76,9 @@ def test_token(request):
     return Response("passed for {}".format(request.user.email))
 
 class UserLogout(APIView):
+    """"
+    Api for logging out a user
+    """
     def post(self, request):
         logout(request)
         return Response(status=status.HTTP_200_OK)

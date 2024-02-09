@@ -13,11 +13,17 @@ from rest_framework.authentication import SessionAuthentication,TokenAuthenticat
 
 
 class CreateBookDetailsView(CreateAPIView):
+    """
+    Api view to create the book details
+    """
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAdminUser]
     serializer_class = BookSerializer
 
 class BooksListView(ListAPIView):
+    """
+    Api view to create the book list
+    """
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = BookSerializer
@@ -27,6 +33,9 @@ class BooksListView(ListAPIView):
         return queryset
     
 class BookListView(RetrieveAPIView):
+    """
+    Api view to list the book details
+    """
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = BookSerializer
@@ -35,6 +44,9 @@ class BookListView(RetrieveAPIView):
         return queryset
 
 class UpdateBookDetailsView(UpdateAPIView):
+    """
+    Api view to update the book details
+    """
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAdminUser]
     serializer_class = BookSerializer
@@ -43,6 +55,9 @@ class UpdateBookDetailsView(UpdateAPIView):
         return queryset
 
 class DeleteBookView(DestroyAPIView):
+    """
+    Api view to delete the book details
+    """
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAdminUser]
     queryset = Book.objects.all()

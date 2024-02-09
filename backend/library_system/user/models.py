@@ -3,6 +3,9 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class User(AbstractUser):
+    """
+    Model for Custom User
+    """
     STATUS = (
         ("admin","admin"),
         ("student","student")

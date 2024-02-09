@@ -33,6 +33,9 @@ from .models import Cart, CartItem, Book
 from .serializers import CartSerializer, CartItemSerializer
 
 class AddToCart(APIView):
+    """
+    Api to add item to cart
+    """
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
@@ -57,6 +60,9 @@ class AddToCart(APIView):
         return Response(serializer.data)
 
 class ViewCart(APIView):
+    """
+    Api to view item in cart
+    """
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
@@ -71,6 +77,9 @@ class ViewCart(APIView):
         return Response(serializer.data)
 
 class ModifyCart(APIView):
+    """
+    Api to edit item in cart
+    """
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
@@ -84,6 +93,9 @@ class ModifyCart(APIView):
             return Response({"error": "Cart item or book does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
 class Checkout(APIView):
+    """
+    Api to checkout in cart
+    """
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
