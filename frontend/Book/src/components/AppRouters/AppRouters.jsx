@@ -1,21 +1,21 @@
 import { Route, Routes } from "react-router-dom";
 import React from "react";
 
-const Layout = React.lazy(() => import("../../pages/Layout/Layout"));
-// const Header = React.lazy(() => import("../Header/Header"));
 const Home = React.lazy(() => import("../Home/Home"));
 const Login = React.lazy(() => import("../../pages/Login/Login"));
+const Books = React.lazy(() => import("../Books/Books"));
+const CartPage = React.lazy(() => import("../CartPage/CartPage"));
 
 const AppRouters = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      {/* <Route element={<Header />}> */}
-      <Route element={<Layout />}>
+    <div>
+      <Routes>
+        <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
-      </Route>
-      {/* </Route> */}
-    </Routes>
+        <Route path="/books" element={<Books />} />
+        <Route path="/cart" element={<CartPage />} />
+      </Routes>
+    </div>
   );
 };
 
