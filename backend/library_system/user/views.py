@@ -24,7 +24,7 @@ def login(request):
         return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
     token, created = Token.objects.get_or_create(user=user)
     serializer = UserAuthSerializer(instance=user)
-    return Response({"token": token.key, "user_email": serializer.data['email'], "status": status.HTTP_201_CREATED})
+    return Response({"message":"sucess","token": token.key, "user_email": serializer.data['email']}, status =  status.HTTP_200_OK)
 
 @api_view(['POST'])
 def signup(request):
