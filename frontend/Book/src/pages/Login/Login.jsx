@@ -36,6 +36,10 @@ const Login = () => {
       if (response.status === 200) {
         navigate("/home");
         localStorage.setItem("user_data", JSON.stringify(response.data));
+        localStorage.setItem(
+          "authentication",
+          JSON.stringify({ is_authenticated: true })
+        );
       }
     } catch (error) {
       console.log(error.response);
