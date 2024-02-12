@@ -12,20 +12,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let token;
-        const tokenString = localStorage.getItem("user_data");
-        if (tokenString) {
-          const tokenConverted = JSON.parse(tokenString);
-          token = tokenConverted.token;
-        }
-        let authToken = {
-          Authorization: "Token " + token,
-        };
-        const response = await axiosInstance.get("books/list/", {
-          headers: {
-            authToken,
-          },
-        });
+        const response = await axiosInstance.get("books/list/", {});
         setBooks(response.data);
       } catch (error) {
         if (error.response.status === 403) {
@@ -41,9 +28,10 @@ const Home = () => {
     <div>
       <Container>
         <Row>
-          {books.map((book) => (
-            <BookListContainer key={book.id} product={book} />
-          ))}
+          {books &&
+            books.map((book) => (
+              <BookListContainer key={book.id} product={book} />
+            ))}
         </Row>
       </Container>
     </div>

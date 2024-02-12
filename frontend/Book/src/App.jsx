@@ -5,12 +5,12 @@ import AppRouters from "./components/AppRouters/AppRouters";
 import Header from "./components/Header/Header";
 
 function App() {
-  // let isAuthenticated = localStorage.getItem("authentication");
-  // console.log(isAuthenticated.is_authenticated);
-  let isAuthenticated;
+  let isAuthenticated = false;
   let isAuthenticatedString = localStorage.getItem("authentication");
-  if (isAuthenticatedString) {
+  if (isAuthenticatedString !== null) {
     isAuthenticated = JSON.parse(isAuthenticatedString);
+  } else {
+    isAuthenticated = false;
   }
 
   return (
