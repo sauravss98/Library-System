@@ -1,26 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./BookListContainer.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import axiosInstance from "../../utils/Axios";
+import { useNavigate } from "react-router-dom";
 
-const BookListContainer = (key, item) => {
-  const [book, setBook] = useState([]);
+const BookListContainer = () => {
+  const [books, setBooks] = useState([]);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get("books/list/", {});
+        setBooks(response.data);
+      } catch (error) {
+        if (error.response.status === 403) {
+          navigate("/");
+        }
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
-    <div className="main_container">
-      <Row>
-        <Col>
-          <text>Book Title: {}</text>
-        </Col>
-        <Col>
-          <text>Author Name: {}</text>
-        </Col>
-        <Col>
-          <text>Quantity Left: {}</text>
-        </Col>
-        <Col>
-          <button>Add To Cart</button>
-        </Col>
-      </Row>
+    <div>
+      {books.map((book) => (
+        <Row key={book.id} className="main_container">
+          <Col>
+            <p>Book Title: {book.title}</p>
+          </Col>
+          <Col>
+            <p>Author Name: {book.author_name}</p>
+          </Col>
+          <Col>
+            <p>Quantity Left: {book.quantity}</p>
+          </Col>
+          <Col>
+            <button>Add To Cart</button>
+          </Col>
+        </Row>
+      ))}
     </div>
   );
 };
