@@ -6,6 +6,10 @@ import axiosInstance from "../../utils/Axios";
 import { useNavigate } from "react-router-dom";
 
 const BookListContainer = () => {
+  const handleClick = (book) => {
+    console.log(book);
+  };
+
   const [books, setBooks] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -36,7 +40,7 @@ const BookListContainer = () => {
             <p>Quantity Left: {book.quantity}</p>
           </Col>
           <Col>
-            <button>Add To Cart</button>
+            <button onClick={() => handleClick(book)}>Add To Cart</button>
           </Col>
         </Row>
       ))}
