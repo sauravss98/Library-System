@@ -6,8 +6,13 @@ import axiosInstance from "../../utils/Axios";
 import { useNavigate } from "react-router-dom";
 
 const BookListContainer = () => {
-  const handleClick = (book) => {
+  const handleClick = async (book) => {
     console.log(book);
+    let body = {
+      book_ids:book.id,
+    }
+    const response = await axiosInstance.post("cart/cart-item/create",body);
+    console.log(response)
   };
 
   const [books, setBooks] = useState([]);
