@@ -75,6 +75,27 @@ class ViewCart(APIView):
         print(cart)
         serializer = CartItemSerializer(cart_item)
         return Response(serializer.data)
+    
+class CartCount(APIView):
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self,request):
+        count = 0
+        user = request.user
+        cart= Cart.objects.get(user=user)
+        cart_item = CartItem.objects.get(cart = cart)
+        serializer = CartItemSerializer(cart_item)
+        items = serializer.data
+        for item in items:
+            count+=1
+        print(count)
+        # count = serializer.data.count
+        # print("Count is "+count)
+        return Response({"count":count})
+        # return Response(count)
+
+
 
 class ModifyCart(APIView):
     """
