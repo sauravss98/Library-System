@@ -41,12 +41,13 @@ class AddToCart(APIView):
 
     def post(self, request):
         book_ids = request.data.get('book_ids', [])
-        input_string = "[1,2,3,4]"
-        book_ids = ast.literal_eval(input_string)
+        print(type(book_ids))
+        book_ids_array = []
+        book_ids_array.append(book_ids)
         user = request.user
         cart, _ = Cart.objects.get_or_create(user=user)
         print(book_ids)
-        for book_id in book_ids:
+        for book_id in book_ids_array:
             print(book_id)
             try:
                 book = Book.objects.get(pk=book_id)
@@ -54,8 +55,7 @@ class AddToCart(APIView):
                 cart_item, _ = CartItem.objects.get_or_create(cart=cart)
                 cart_item.books.add(book)
             except Book.DoesNotExist:
-                pass  # You might want to handle this case if needed
-        
+                pass        
         serializer = CartSerializer(cart)
         return Response(serializer.data)
 
@@ -87,9 +87,11 @@ class CartCount(APIView):
         cart_item = CartItem.objects.get(cart = cart)
         serializer = CartItemSerializer(cart_item)
         items = serializer.data
-        for item in items:
+        books = items["books"]
+        print(books)
+        for book in books:
+            print(book)
             count+=1
-        print(count)
         # count = serializer.data.count
         # print("Count is "+count)
         return Response({"count":count})
